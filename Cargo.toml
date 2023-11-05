@@ -1,0 +1,33 @@
+[package]
+name = "yadacha"
+version = "0.0.1"
+edition = "2021"
+description = "yadacha is a symmetric cipher that combines chacha20 and very large private keys"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+keywords = [ "crypto", "cryptography", "cli", "no_std", "no-std" ]
+homepage = "https://yadacha.com/"
+exclude = [ "/web" ]
+
+[dependencies]
+getrandom = { version = "0.2.10", optional = true }
+memmap = { version = "0.7.0", optional = true }
+
+[dev-dependencies]
+rug = "1.22.0" # for constants testing
+getrandom = "0.2.10" # for ytest example
+
+[features]
+cli = [ "getrandom", "memmap" ]
+
+[lib]
+name = "yadacha"
+path = "src/lib.rs"
+
+[[bin]]
+name = "yadacha"
+path = "src/main.rs"
+required-features = [ "cli" ]
+
+[[example]]
+name = "ytest"

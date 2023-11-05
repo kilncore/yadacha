@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<title>Yadacha</title>
+	</head>
+	<body>
+		<h1>Yadacha</h1>
+		
+		<hr/>
+		
+		<p>Yadacha is a symmetric cipher that combines <a href="https://cr.yp.to/chacha.html">ChaCha20</a>
+		and very large private keys.</p>
+		<p>This page is a quick start. You can find more info at the <a href="https://crates.io/crates/yadacha">
+		crate</a>, and the <a href="https://github.com/kilncore/yadacha">repository</a>.</p>
+		
+		<hr/>
+		
+		<h2>Installing</h2>
+		<p>Start by <a href="https://www.rust-lang.org/tools/install">installing Rust</a>.
+		Once that is done, you can simply run:<br/>
+		<code>&gt; cargo install yadacha --bin yadacha --features=cli</code></p>
+		
+		<h2>Creating a key</h2>
+		<p>You can use these commands to create keys, from 16 KB to 10 TB in size:<br/>
+		<code>&gt; yadacha generate_key_16k out_key_file</code><br/>
+		<code>&gt; yadacha generate_key_8m out_key_file</code><br/>
+		<code>&gt; yadacha generate_key_1t out_key_file</code><br/>
+		<code>&gt; yadacha generate_key_10t out_key_file</code></p>
+		
+		<h2>Validating keys</h2>
+		<p>To validate a key, use this command:</br>
+		<code>&gt; yadacha validate_key in_key_file</code></p>
+		
+		<h2>Encrypting and decrypting</h2>
+		<p>To encrypt a file with your private key, use this command:</br>
+		<code>&gt; yadacha encrypt in_key_file in_data_file out_data_file</code></p>
+		
+		<p>To decrypt a file with your private key, use this command:</br>
+		<code>&gt; yadacha decrypt in_key_file in_data_file out_data_file</code></p>
+		
+		<hr/>
+		
+		<h3>Requirements</h3>
+		<p>The command line tool currently requires:</p>
+		<ul>
+			<li>Rust edition 2021 or later</li>
+			<li>A platform with <a href="https://github.com/danburkert/memmap-rs">memmap</a> support</li>
+			<li>A little endian CPU</li>
+		</ul>
+		<p>The library itself is pure Rust no_std and can run on almost anything Rust itself supports.</p>
+		
+		<hr/>
+		
+		<h3>Notes</h3>
+		<p>Yadacha was developed for internal use at <a href="https://kilncore.space">Kilncore</a>.</p>
+		<p>As of version 0.0.1, it currently is:</p>
+		<ul>
+			<li>provided as is, with no guarantee whatsoever.</li>
+			<li>NOT peer reviewed (please do).</li>
+			<li>NOT audited (maybe one day).</li>
+			<li>NOT stable (but if there's no update, then it is).</li>
+			<li>NOT optimized (at all, for now).</li>
+			<li>NOT supported (unless you have money).</li>
+		</ul>
+		<p><b>Use only on test data, at your own risk.</b></p>
+			
+		<hr/>
+		
+	</body>
+</html>
