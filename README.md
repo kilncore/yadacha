@@ -76,7 +76,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-yadacha = "0.0.1"
+yadacha = "0.0.2"
 getrandom = "0.2.10"
 ```
 
