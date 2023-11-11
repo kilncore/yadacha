@@ -157,7 +157,7 @@ data (decrypted): [2, 3, 5, 7, 11, 13, 17, 19]
 ```
 
 ### Output with fixed rng
-(should match exactly for v0.0.3, when using prng::new\_fixed\_yadarng(42))
+(should match exactly for v0.0.4, when using prng::new\_fixed\_yadarng(42))
 
 ```rust
 data (plaintext): [2, 3, 5, 7, 11, 13, 17, 19]
@@ -185,6 +185,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted 
 
 ### Changelog
 
+- v0.0.4 Fixed test
 - v0.0.3 BREAKING CHANGE - Small adjustment to the cipher, some cleaning up
 - v0.0.2 Added missing repository in Cargo.toml
 - v0.0.1 Initial release

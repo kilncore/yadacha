@@ -1,6 +1,6 @@
 [package]
 name = "yadacha"
-version = "0.0.3"
+version = "0.0.4"
 edition = "2021"
 description = "yadacha is a symmetric cipher that combines chacha20 and very large private keys"
 license = "MIT OR Apache-2.0"
