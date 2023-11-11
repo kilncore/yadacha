@@ -67,8 +67,9 @@ fn state_to_u8(state: &State, dst: &mut [u8;STATE_SIZE]) {
 impl Yadacha8m<'_> {
     fn run_rounds(&self, state: &State) -> State {
         let mut res = *state;
+        let mut round0_state = [0u64; 16];
         
-        for _ in 0..10 {
+        for round in 0..10 {
 
             for _ in 0..2 {
                 // column rounds
@@ -87,9 +88,13 @@ impl Yadacha8m<'_> {
             for i in 0..16 {
                 res[i] = apply_key(res[i], &self.k, i*4);
             }
+
+            if round == 0 {
+                round0_state = res;
+            }
         }
     
-        for (s1, s0) in res.iter_mut().zip(state.iter()) {
+        for (s1, s0) in res.iter_mut().zip((&round0_state).iter()) {
             *s1 = s1.wrapping_add(*s0);
         }
     

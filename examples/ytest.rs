@@ -25,7 +25,7 @@ fn main() {
     println!("nonce: {:?}", nonce);
     println!("msg_nonce: {:?}", msg_nonce);
 
-    let associated_data = data.len().to_le_bytes(); // or something else
+    let associated_data = (data.len() as u64).to_le_bytes(); // or something else
     println!("associated_data: {:?}", associated_data);
 
     yada.init_encode(&associated_data);

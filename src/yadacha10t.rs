@@ -74,6 +74,7 @@ fn state_to_u8(state: &State, dst: &mut [u8;STATE_SIZE]) {
 
 fn run_rounds(state: &State, k: &Key10t, f: &mut dyn ReadEntry32, use_file: bool) -> State {
     let mut res = *state;
+    let mut round0_state = [0u128; 16];
     
     for round in 0..10 {
 
@@ -98,9 +99,13 @@ fn run_rounds(state: &State, k: &Key10t, f: &mut dyn ReadEntry32, use_file: bool
                 res[i] = apply_key(res[i], &k[round], i*4);
             }
         }
+
+        if round == 0 {
+            round0_state = res;
+        }
     }
 
-    for (s1, s0) in res.iter_mut().zip(state.iter()) {
+    for (s1, s0) in res.iter_mut().zip((&round0_state).iter()) {
         *s1 = s1.wrapping_add(*s0);
     }
 

@@ -76,7 +76,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-yadacha = "0.0.2"
+yadacha = "0.0.3"
 getrandom = "0.2.10"
 ```
 
@@ -109,7 +109,7 @@ fn main() {
     println!("nonce: {:?}", nonce);
     println!("msg_nonce: {:?}", msg_nonce);
 
-    let associated_data = data.len().to_le_bytes(); // or something else
+    let associated_data = (data.len() as u64).to_le_bytes(); // or something else
     println!("associated_data: {:?}", associated_data);
 
     yada.init_encode(&associated_data);
@@ -136,28 +136,28 @@ fn main() {
 
 ```rust
 data (plaintext): [2, 3, 5, 7, 11, 13, 17, 19]
-key_16k (part): [144, 129, 47, 54, 228, 26, 92, 37]
-nonce: [1481763387, 707504935, 1062381642, 791446855, 3409614740, 2248084053, 3699221186, 448545757]
-msg_nonce: [2122557807, 788958039]
+key_16k (part): [23, 122, 130, 212, 72, 85, 52, 134]
+nonce: [876659832, 2034512187, 4227600364, 1904335117, 2528694799, 741854543, 3945783584, 3561167336]
+msg_nonce: [3767118128, 1500355652]
 associated_data: [8, 0, 0, 0, 0, 0, 0, 0]
-data (ciphertext): [48, 22, 31, 90, 130, 130, 135, 25]
-tag (part): [204, 103, 188, 124, 28, 84, 72, 43]
+data (ciphertext): [206, 86, 63, 114, 232, 20, 222, 69]
+tag (part): [221, 209, 249, 239, 197, 16, 152, 120]
 data (decrypted): [2, 3, 5, 7, 11, 13, 17, 19]
 
 data (plaintext): [2, 3, 5, 7, 11, 13, 17, 19]
-key_16k (part): [119, 151, 98, 249, 225, 95, 229, 222]
-nonce: [331496785, 3567924338, 86280987, 114187503, 3650349383, 3414623146, 4238463430, 1897597320]
-msg_nonce: [1312796256, 2321457363]
+key_16k (part): [98, 81, 95, 24, 184, 192, 215, 251]
+nonce: [1756477226, 3512108898, 3482418452, 2734284285, 3102698299, 1823011375, 2586904859, 3783255701]
+msg_nonce: [216179676, 2814286635]
 associated_data: [8, 0, 0, 0, 0, 0, 0, 0]
-data (ciphertext): [28, 173, 155, 43, 210, 43, 191, 67]
-tag (part): [250, 124, 205, 22, 255, 249, 135, 94]
+data (ciphertext): [80, 105, 31, 147, 114, 121, 203, 196]
+tag (part): [145, 41, 188, 227, 153, 158, 93, 79]
 data (decrypted): [2, 3, 5, 7, 11, 13, 17, 19]
 
 [...]
 ```
 
 ### Output with fixed rng
-(should match exactly for v0.0.1 if you are on a 64 bits platform, when using prng::new\_fixed\_yadarng(42))
+(should match exactly for v0.0.3, when using prng::new\_fixed\_yadarng(42))
 
 ```rust
 data (plaintext): [2, 3, 5, 7, 11, 13, 17, 19]
@@ -165,8 +165,8 @@ key_16k (part): [218, 254, 24, 241, 6, 43, 167, 152]
 nonce: [4063157125, 3856611287, 16257720, 3825573552, 1180332863, 3315114498, 2462000061, 3047591357]
 msg_nonce: [2158674, 4156766091]
 associated_data: [8, 0, 0, 0, 0, 0, 0, 0]
-data (ciphertext): [22, 42, 160, 191, 47, 216, 134, 221]
-tag (part): [29, 3, 195, 141, 139, 28, 167, 35]
+data (ciphertext): [69, 192, 68, 122, 241, 72, 195, 65]
+tag (part): [146, 19, 75, 193, 224, 7, 92, 31]
 data (decrypted): [2, 3, 5, 7, 11, 13, 17, 19]
 ```
 
@@ -182,3 +182,9 @@ at your option.
 ### Contribution
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any additional terms or conditions.
+
+### Changelog
+
+- v0.0.3 BREAKING CHANGE - Small adjustment to the cipher, some cleaning up
+- v0.0.2 Added missing repository in Cargo.toml
+- v0.0.1 Initial release
