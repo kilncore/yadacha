@@ -240,8 +240,8 @@ fn main() {
 
     let mut rng = RandomSource{};
     let use_file = match std::env::var("ALWAYS_MMAP") {
-        Ok(v) => false,
-        Err(e) => true
+        Ok(_v) => false,
+        Err(_e) => true
     };
 
     match args[1].as_str() {

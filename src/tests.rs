@@ -142,6 +142,39 @@ fn check_16k() {
 }
 
 #[test]
+fn check_8m() {
+    let associated_data = sqrt_frac_part(59).to_le_bytes();
+    let ori_data = sqrt_frac_part(61).to_le_bytes();
+    let mut rng = prng::new_fixed_yadarng(sqrt_frac_part(67));
+
+    let mut key_8m = alloc_key_8m();
+    yadacha8m::init_key_8m(&mut rng, &mut key_8m);
+    assert!(yadacha8m::validate_key_8m(&key_8m));
+
+    let mut data = ori_data.clone();
+    let nonce : Nonce8m = yadacha8m::new_nonce_8m(&mut rng);
+    let msg_nonce : MsgNonce8m = yadacha8m::new_msg_nonce_8m(&mut rng, &data);
+    let mut yada = yadacha8m::new_yadacha8m(&key_8m, &nonce, &msg_nonce);
+    yada.init_encode(&associated_data);
+    yada.encode(&mut data);
+    let tag = yada.finalize();
+
+    assert_eq!(key_8m[0][..16], [63635, 48774, 31092, 41476, 56936, 43784, 49400, 9883, 17882, 63124, 12322, 27495, 11861, 968, 64720, 14618]);
+    assert_eq!(nonce, [16735576189361918649, 2898955267481651275, 16049008267602703069, 9244850915759370945, 11777281011042286855, 2970257613299196505, 6108691448868560640, 1342205956880350260]);
+    assert_eq!(msg_nonce, [186084849978357342, 13031428407824554078]);
+    assert_eq!(data, [89, 102, 47, 152, 10, 247, 172, 79, 100, 244, 60, 123, 105, 54, 214, 89]);
+    assert_eq!(tag, [207, 130, 223, 237, 120, 72, 164, 63, 104, 68, 43, 182, 225, 148, 237, 137, 164, 73, 146, 234, 207, 6, 34, 16, 16, 254, 163, 174, 82, 126, 97, 146, 53, 185, 113, 29, 139, 139, 128, 147, 6, 239, 25, 37, 253, 73, 5, 36, 160, 9, 206, 239, 177, 235, 141, 84, 163, 100, 58, 121, 167, 176, 6, 115, 191, 215, 111, 64, 1, 247, 190, 212, 164, 146, 250, 211, 96, 124, 186, 98, 172, 74, 141, 0, 163, 14, 155, 17, 114, 46, 229, 65, 217, 240, 30, 57, 136, 23, 251, 59, 71, 133, 161, 13, 169, 89, 235, 245, 106, 110, 34, 50, 161, 153, 158, 35, 31, 98, 198, 23, 110, 155, 227, 142, 44, 141, 58, 164]);
+
+    let mut yada = yadacha8m::new_yadacha8m(&key_8m, &nonce, &msg_nonce);
+    yada.init_decode(&associated_data);
+    yada.decode(&mut data);
+    let valid = yada.validate(&tag);
+    assert!(valid);
+
+    assert_eq!(data, ori_data);
+}
+
+#[test]
 #[ignore]
 fn check_keygen_16k() {
     let mut rng = prng::new_fixed_yadarng(sqrt_frac_part(88));
@@ -177,11 +210,6 @@ fn check_keygen_subkey_1t() {
         assert!(yadacha1t::validate_subkey_1t(&subkey_1t, &mut temp_seen));
     }
 }
-
-// #[test]
-// fn check_8m() {
-//
-// }
 
 // #[cfg(target_pointer_width = "64")]
 // #[test]

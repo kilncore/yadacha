@@ -66,6 +66,11 @@ If you want to dive into the code, start by understanding lib.rs and yadacha16k.
 
 The code is single-threaded, isn't idiomatic Rust code for the moment, but should be fairly easy to follow, especially if you are familiar with ChaCha20.
 
+### Note regarding 1TB and 10TB keys with the cli tool
+
+If you have enough RAM on your machine, you can preload the key by validating it,
+then set the ALWAYS_MMAP=1 env. variable to get decent speed for encrypt/decrypt.
+
 ## Quick example
 ### Cargo.toml
 
@@ -76,7 +81,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-yadacha = "0.0.3"
+yadacha = "0.0.5"
 getrandom = "0.2.10"
 ```
 
@@ -157,7 +162,7 @@ data (decrypted): [2, 3, 5, 7, 11, 13, 17, 19]
 ```
 
 ### Output with fixed rng
-(should match exactly for v0.0.4, when using prng::new\_fixed\_yadarng(42))
+(should match exactly for v0.0.5, when using prng::new\_fixed\_yadarng(42))
 
 ```rust
 data (plaintext): [2, 3, 5, 7, 11, 13, 17, 19]
@@ -185,6 +190,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted 
 
 ### Changelog
 
+- v0.0.5 Added test, cosmetic changes
 - v0.0.4 Fixed test
 - v0.0.3 BREAKING CHANGE - Small adjustment to the cipher, some cleaning up
 - v0.0.2 Added missing repository in Cargo.toml
